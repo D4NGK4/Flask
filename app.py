@@ -5,6 +5,9 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
+with app.app_context():
+    db.create_all()
+
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +17,8 @@ class Todo(db.Model):
     
     def __repr__(self):
         return '<Task %r>' % self.id
+    
+    
 
 
 @app.route('/')
